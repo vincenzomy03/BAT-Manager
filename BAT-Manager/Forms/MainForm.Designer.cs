@@ -35,6 +35,7 @@ namespace BatManager.Forms
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.lblStatusCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblStatusMessage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblUpdate = new System.Windows.Forms.ToolStripStatusLabel();
             this.lvScripts = new System.Windows.Forms.ListView();
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colAdmin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -50,6 +51,8 @@ namespace BatManager.Forms
             this.ctxSep2 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxCopyPath = new System.Windows.Forms.ToolStripMenuItem();
             this.ctxShowInExplorer = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxSep3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctxCheckUpdates = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.contextMenu.SuspendLayout();
@@ -193,7 +196,8 @@ namespace BatManager.Forms
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatusCount,
-            this.lblStatusMessage});
+            this.lblStatusMessage,
+            this.lblUpdate});
             this.statusStrip.Location = new System.Drawing.Point(0, 535);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 14, 0);
@@ -218,6 +222,17 @@ namespace BatManager.Forms
             this.lblStatusMessage.Spring = true;
             this.lblStatusMessage.Text = "Ready";
             this.lblStatusMessage.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblUpdate
+            // 
+            this.lblUpdate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblUpdate.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lblUpdate.IsLink = true;
+            this.lblUpdate.Name = "lblUpdate";
+            this.lblUpdate.Size = new System.Drawing.Size(0, 20);
+            this.lblUpdate.Text = "";
+            this.lblUpdate.Visible = false;
+            this.lblUpdate.Click += new System.EventHandler(this.LblUpdate_Click);
             // 
             // lvScripts
             // 
@@ -287,7 +302,9 @@ namespace BatManager.Forms
             this.ctxDelete,
             this.ctxSep2,
             this.ctxCopyPath,
-            this.ctxShowInExplorer});
+            this.ctxShowInExplorer,
+            this.ctxSep3,
+            this.ctxCheckUpdates});
             this.contextMenu.Name = "contextMenu";
             this.contextMenu.Size = new System.Drawing.Size(222, 160);
             this.contextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenu_Opening);
@@ -344,6 +361,18 @@ namespace BatManager.Forms
             this.ctxShowInExplorer.Size = new System.Drawing.Size(221, 24);
             this.ctxShowInExplorer.Text = "📁 Show in File Explorer";
             this.ctxShowInExplorer.Click += new System.EventHandler(this.CtxShowInExplorer_Click);
+            // 
+            // ctxSep3
+            // 
+            this.ctxSep3.Name = "ctxSep3";
+            this.ctxSep3.Size = new System.Drawing.Size(218, 6);
+            // 
+            // ctxCheckUpdates
+            // 
+            this.ctxCheckUpdates.Name = "ctxCheckUpdates";
+            this.ctxCheckUpdates.Size = new System.Drawing.Size(221, 24);
+            this.ctxCheckUpdates.Text = "🔄 Check for Updates...";
+            this.ctxCheckUpdates.Click += new System.EventHandler(this.CtxCheckUpdates_Click);
             // 
             // MainForm
             // 
@@ -407,5 +436,8 @@ namespace BatManager.Forms
         private System.Windows.Forms.ToolStripSeparator ctxSep2;
         private System.Windows.Forms.ToolStripMenuItem ctxCopyPath;
         private System.Windows.Forms.ToolStripMenuItem ctxShowInExplorer;
+        private System.Windows.Forms.ToolStripSeparator ctxSep3;
+        private System.Windows.Forms.ToolStripMenuItem ctxCheckUpdates;
+        private System.Windows.Forms.ToolStripStatusLabel lblUpdate;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -44,9 +45,12 @@ namespace BatManager.Forms
             catch { }
         }
 
+        private string _updateUrl = null;
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             LoadScripts();
+            CheckForUpdatesQuietlyAsync();
         }
 
         /// <summary>
@@ -394,6 +398,7 @@ namespace BatManager.Forms
             ctxDelete.Enabled = hasSelection;
             ctxCopyPath.Enabled = hasSelection;
             ctxShowInExplorer.Enabled = hasSelection;
+            ctxCheckUpdates.Enabled = true;
         }
 
         private void CtxCopyPath_Click(object sender, EventArgs e)
@@ -412,6 +417,90 @@ namespace BatManager.Forms
             if (selected != null)
             {
                 ScriptRunner.OpenInExplorer(selected.FullPath);
+            }
+        }
+
+        private async void CheckForUpdatesQuietlyAsync()
+        {
+            try
+            {
+                var update = await UpdateChecker.CheckForUpdatesAsync();
+                if (update != null && update.HasUpdate)
+                {
+                    _updateUrl = update.HtmlUrl;
+                    lblUpdate.Text = string.Format("⭐ Update available (v{0})", update.LatestVersion);
+                    lblUpdate.ToolTipText = "Click to view and download the new version on GitHub";
+                    lblUpdate.Visible = true;
+                }
+            }
+            catch { }
+        }
+
+        private async void CtxCheckUpdates_Click(object sender, EventArgs e)
+        {
+            SetStatusMessage("Checking for updates on GitHub...");
+            try
+            {
+                var update = await UpdateChecker.CheckForUpdatesAsync();
+                if (update != null && update.HasUpdate)
+                {
+                    _updateUrl = update.HtmlUrl;
+                    lblUpdate.Text = string.Format("⭐ Update available (v{0})", update.LatestVersion);
+                    lblUpdate.ToolTipText = "Click to view and download the new version on GitHub";
+                    lblUpdate.Visible = true;
+
+                    var res = MessageBox.Show(
+                        this,
+                        string.Format("A new version of BAT-Manager (v{0}) is available!\n\nYour current version: v{1}\n\nWould you like to open the GitHub release page to download it?", update.LatestVersion, update.CurrentVersion),
+                        "Update Available",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information);
+
+                    if (res == DialogResult.Yes && !string.IsNullOrWhiteSpace(update.HtmlUrl))
+                    {
+                        Process.Start(update.HtmlUrl);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(
+                        this,
+                        string.Format("You are running the latest version of BAT-Manager (v{0}).", UpdateChecker.CurrentVersionString),
+                        "BAT-Manager Up to Date",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    SetStatusMessage("BAT-Manager is up to date.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    this,
+                    string.Format("Could not check for updates:\n\n{0}", ex.Message),
+                    "Update Check Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                SetStatusMessage("Could not check for updates.");
+            }
+        }
+
+        private void LblUpdate_Click(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(_updateUrl))
+            {
+                try
+                {
+                    Process.Start(_updateUrl);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        this,
+                        string.Format("Cannot open browser:\n\n{0}", ex.Message),
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
             }
         }
 

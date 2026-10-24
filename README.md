@@ -80,7 +80,8 @@ BAT-Manager/
 │   ├── Services/
 │   │   ├── BatParser.cs                # Metadata parser (@name, @description, @runAsAdmin)
 │   │   ├── ScriptRepository.cs         # File I/O, AppData persistence, naming validation & encoding
-│   │   └── ScriptRunner.cs             # Process launcher (cmd.exe /c, UAC elevation)
+│   │   ├── ScriptRunner.cs             # Process launcher (cmd.exe /c, UAC elevation)
+│   │   └── UpdateChecker.cs            # GitHub Releases update checker & version comparison
 │   │
 │   ├── Forms/
 │   │   ├── MainForm.cs                 # Main dashboard with ListView, ToolStrip, search & sort

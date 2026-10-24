@@ -68,6 +68,7 @@
     <Compile Include="Services\BatParser.cs" />
     <Compile Include="Services\ScriptRepository.cs" />
     <Compile Include="Services\ScriptRunner.cs" />
+    <Compile Include="Services\UpdateChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\EditorForm.resx">

@@ -17,8 +17,12 @@ namespace BatManager.Tests
                 BatParserTests.RunAllTests();
                 Console.WriteLine();
 
-                Console.WriteLine("[2/2] Testing ScriptRepository...");
+                Console.WriteLine("[2/3] Testing ScriptRepository...");
                 ScriptRepositoryTests.RunAllTests();
+                Console.WriteLine();
+
+                Console.WriteLine("[3/3] Testing UpdateChecker...");
+                UpdateCheckerTests.RunAllTests();
                 Console.WriteLine();
 
                 Console.ForegroundColor = ConsoleColor.Green;

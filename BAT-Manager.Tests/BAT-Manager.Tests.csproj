@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="BatParserTests.cs" />
     <Compile Include="ScriptRepositoryTests.cs" />
+    <Compile Include="UpdateCheckerTests.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
