@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6?logo=windows)](https://github.com/vincenzomy03/BAT-Manager)
 [![.NET Framework](https://img.shields.io/badge/.NET%20Framework-4.8-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![AI-Assisted](https://img.shields.io/badge/AI--Assisted-Google%20Antigravity-7B1FA2?logo=google&logoColor=white)](https://github.com/vincenzomy03/BAT-Manager)
 
 A lightweight, portable Windows desktop application designed to manage, create, organize, edit, and execute Batch scripts (`.bat` / `.cmd`) through a clean and intuitive interface.
 
@@ -194,6 +195,15 @@ This script automatically builds the release binary, runs tests, and packages al
 3. Choose or create a tag (e.g. `v1.0.0`).
 4. Drag and drop the files from your local `dist/` folder into the binaries attachment box.
 5. Click **"Publish release"**.
+
+---
+
+## 🤖 AI Transparency & Provenance
+
+In adherence to open-source transparency best practices and modern AI disclosure recommendations, this software was crafted through collaborative AI pair programming (**Google Antigravity**).
+
+- **Human Oversight**: Architectural patterns, Windows Forms UX design, strict file system validation logic, and automated test suites were guided, reviewed, and validated under human supervision.
+- **Code Integrity**: The application logic and codebase are completely open source under the MIT License and verified against Microsoft MSBuild 4.8.
 
 ---
 
