@@ -80,7 +80,7 @@ jobs:
           $checksumContent = "$exeHash  BAT-Manager.exe`r`n$zipHash  $leafZip"
           Set-Content -Path "$distDir\SHA256SUMS.txt" -Value $checksumContent -Encoding utf8
 
-          Write-Host "Prepared assets in directory: $distDir"
+          Write-Host "Prepared assets in directory: ${distDir}:"
           Get-ChildItem $distDir | Select-Object Name, Length
 
       - name: Create GitHub Release
