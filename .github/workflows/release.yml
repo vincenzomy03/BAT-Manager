@@ -75,13 +75,10 @@ jobs:
           # Generate SHA256 checksums
           $exeHash = (Get-FileHash "$distDir\BAT-Manager.exe" -Algorithm SHA256).Hash
           $zipHash = (Get-FileHash $zipPath -Algorithm SHA256).Hash
+          $leafZip = Split-Path $zipPath -Leaf
 
-          $checksums = @"
-          $exeHash  BAT-Manager.exe
-          $zipHash  $(Split-Path $zipPath -Leaf)
-          "@
-
-          $checksums | Set-Content "$distDir\SHA256SUMS.txt" -Encoding utf8
+          $checksumContent = "$exeHash  BAT-Manager.exe`r`n$zipHash  $leafZip"
+          Set-Content -Path "$distDir\SHA256SUMS.txt" -Value $checksumContent -Encoding utf8
 
           Write-Host "Prepared assets in $distDir:"
           Get-ChildItem $distDir | Select-Object Name, Length
