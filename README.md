@@ -45,7 +45,7 @@ Pre-built binaries and archives are available in the [**Releases**](https://gith
   - Saves in **UTF-8 (without BOM)** for clean Git diffs and cross-platform compatibility.
   - Automatically detects and falls back to **CodePage 850 (MS-DOS OEM)** or ANSI when reading legacy batch files with accented characters.
 - **Execution & Testing**:
-  - **▶️ Run**: Executes the script in an interactive console window (`cmd.exe /k`) so command output remains visible after completion.
+  - **▶️ Run**: Executes the script in a console window (`cmd.exe /c`, closes automatically upon completion) or directly by double-clicking it in the list.
   - **🛡️ Run as Admin**: Elevates the script with administrative privileges on demand.
   - **▶️ Test Script**: Lets you preview and run the script directly from the editor window before committing changes to disk.
 - **Real-Time Search**: Instant search bar filtering by name, description, filename, or batch command contents.
@@ -80,7 +80,7 @@ BAT-Manager/
 │   ├── Services/
 │   │   ├── BatParser.cs                # Metadata parser (@name, @description, @runAsAdmin)
 │   │   ├── ScriptRepository.cs         # File I/O, AppData persistence, naming validation & encoding
-│   │   └── ScriptRunner.cs             # Process launcher (cmd.exe /k, UAC elevation)
+│   │   └── ScriptRunner.cs             # Process launcher (cmd.exe /c, UAC elevation)
 │   │
 │   ├── Forms/
 │   │   ├── MainForm.cs                 # Main dashboard with ListView, ToolStrip, search & sort

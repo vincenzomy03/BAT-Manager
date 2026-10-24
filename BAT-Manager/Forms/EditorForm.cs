@@ -180,7 +180,7 @@ namespace BatManager.Forms
                 string fullContent = BatParser.BuildFileContent(txtName.Text, txtDescription.Text, txtContent.Text, chkRunAsAdmin.Checked);
                 File.WriteAllText(tempFile, fullContent, _repository.DefaultEncoding);
 
-                ScriptRunner.RunFile(tempFile, chkRunAsAdmin.Checked, true);
+                ScriptRunner.RunFile(tempFile, chkRunAsAdmin.Checked, false);
             }
             catch (Exception ex)
             {

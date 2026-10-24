@@ -198,6 +198,7 @@ namespace BatManager.Forms
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 14, 0);
             this.statusStrip.Size = new System.Drawing.Size(940, 26);
+            this.statusStrip.SizingGrip = false;
             this.statusStrip.TabIndex = 1;
             this.statusStrip.Text = "Status";
             // 
@@ -263,7 +264,7 @@ namespace BatManager.Forms
             // colDescription
             // 
             this.colDescription.Text = "Description";
-            this.colDescription.Width = 400;
+            this.colDescription.Width = 475;
             // 
             // colFileName
             // 
@@ -354,7 +355,8 @@ namespace BatManager.Forms
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MinimumSize = new System.Drawing.Size(880, 420);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "BAT-Manager - Batch Script Manager";

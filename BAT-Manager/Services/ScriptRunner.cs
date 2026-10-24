@@ -13,7 +13,7 @@ namespace BatManager.Services
         /// <summary>
         /// Esegue lo script batch in una nuova finestra di cmd.exe.
         /// </summary>
-        public static Process Run(BatScript script, bool asAdmin = false, bool keepWindowOpen = true)
+        public static Process Run(BatScript script, bool asAdmin = false, bool keepWindowOpen = false)
         {
             if (script == null) throw new ArgumentNullException("script");
             return RunFile(script.FullPath, asAdmin, keepWindowOpen);
@@ -22,7 +22,7 @@ namespace BatManager.Services
         /// <summary>
         /// Esegue un file batch dato il percorso completo.
         /// </summary>
-        public static Process RunFile(string fullPath, bool asAdmin = false, bool keepWindowOpen = true)
+        public static Process RunFile(string fullPath, bool asAdmin = false, bool keepWindowOpen = false)
         {
             if (string.IsNullOrWhiteSpace(fullPath) || !File.Exists(fullPath))
             {

@@ -15,7 +15,6 @@ namespace BatManager.Forms
         private List<BatScript> _allScripts = new List<BatScript>();
         private int _sortColumnIndex = 0; // 0 = Nome
         private bool _sortAscending = true;
-
         public MainForm()
         {
             InitializeComponent();
@@ -249,7 +248,7 @@ namespace BatManager.Forms
             try
             {
                 bool asAdmin = selected.RunAsAdmin;
-                ScriptRunner.Run(selected, asAdmin, true);
+                ScriptRunner.Run(selected, asAdmin, false);
 
                 if (asAdmin)
                 {
@@ -277,7 +276,7 @@ namespace BatManager.Forms
 
             try
             {
-                ScriptRunner.Run(selected, true, true);
+                ScriptRunner.Run(selected, true, false);
                 SetStatusMessage(string.Format("Execution started as Administrator: {0}", selected.FileName));
             }
             catch (Exception ex)
@@ -329,7 +328,7 @@ namespace BatManager.Forms
 
         private void LvScripts_DoubleClick(object sender, EventArgs e)
         {
-            BtnEdit_Click(sender, e);
+            BtnRun_Click(sender, e);
         }
 
         private void LvScripts_ColumnClick(object sender, ColumnClickEventArgs e)
