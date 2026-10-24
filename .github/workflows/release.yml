@@ -1,0 +1,102 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release Tag (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build & Publish Release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Determine Version Tag
+        id: vars
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ github.event.inputs.tag_name }}"
+          else
+            TAG="${GITHUB_REF#refs/tags/}"
+          fi
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          echo "Selected tag: $TAG"
+
+      - name: Build Solution (Release)
+        run: |
+          msbuild.exe BAT-Manager.sln /t:Clean,Build /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Run Unit Tests
+        run: |
+          & ".\BAT-Manager.Tests\bin\Release\BAT-Manager.Tests.exe"
+
+      - name: Prepare Distribution Package
+        shell: pwsh
+        run: |
+          $tag = "${{ steps.vars.outputs.tag }}"
+          $distDir = "dist"
+          $bundleDir = "dist\BAT-Manager-$tag"
+
+          New-Item -ItemType Directory -Force -Path $distDir | Out-Null
+          New-Item -ItemType Directory -Force -Path $bundleDir | Out-Null
+          New-Item -ItemType Directory -Force -Path "$bundleDir\scripts" | Out-Null
+
+          # Copy main executable
+          Copy-Item "BAT-Manager\bin\Release\BAT-Manager.exe" -Destination "$distDir\BAT-Manager.exe"
+          Copy-Item "BAT-Manager\bin\Release\BAT-Manager.exe" -Destination "$bundleDir\BAT-Manager.exe"
+
+          # Copy metadata and sample scripts
+          Copy-Item "README.md" -Destination "$bundleDir\README.md"
+          Copy-Item "LICENSE" -Destination "$bundleDir\LICENSE"
+          Copy-Item "BAT-Manager\scripts\*" -Destination "$bundleDir\scripts\" -Recurse
+
+          # Create zip bundle
+          $zipPath = "$distDir\BAT-Manager-$tag-windows.zip"
+          Compress-Archive -Path "$bundleDir\*" -DestinationPath $zipPath -Force
+
+          # Generate SHA256 checksums
+          $exeHash = (Get-FileHash "$distDir\BAT-Manager.exe" -Algorithm SHA256).Hash
+          $zipHash = (Get-FileHash $zipPath -Algorithm SHA256).Hash
+
+          $checksums = @"
+          $exeHash  BAT-Manager.exe
+          $zipHash  $(Split-Path $zipPath -Leaf)
+          "@
+
+          $checksums | Set-Content "$distDir\SHA256SUMS.txt" -Encoding utf8
+
+          Write-Host "Prepared assets in $distDir:"
+          Get-ChildItem $distDir | Select-Object Name, Length
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.tag }}
+          name: "BAT-Manager ${{ steps.vars.outputs.tag }}"
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            dist/BAT-Manager.exe
+            dist/BAT-Manager-*-windows.zip
+            dist/SHA256SUMS.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

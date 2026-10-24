@@ -1,0 +1,38 @@
+## Visual Studio & .NET .gitignore
+.vs/
+.vscode/
+bin/
+obj/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.tmp
+*.log
+*.cache
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Aa]rms/
+[Aa]rm64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Distribution & Releases
+dist/
+*.zip
+
